@@ -16,12 +16,19 @@ struct RecipeCard: View {
             image.resizable()
                 .aspectRatio(contentMode: .fill)
                 .overlay(alignment: .bottom) {
-                    Text(recipe.name ?? "")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .shadow(color: .black, radius: 3, x: 0, y: 0)
-                        .frame(maxWidth: 136)
-                        .padding()
+                    VStack {
+                        Text(recipe.name ?? "")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .shadow(color: .black, radius: 3, x: 0, y: 0)
+                            .frame(maxWidth: 136)
+                            .padding()
+                        Text(recipe.headline ?? "")
+                            .font(.subheadline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: 136)
+                            .padding()
+                    }
                 }
             }
             placeholder: {
