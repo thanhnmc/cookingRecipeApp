@@ -20,15 +20,17 @@ class ListRecipeIntent {
 extension ListRecipeIntent: RecipeListIntentProtocol {
     func fetchList() {
         model.contentState = .loading
-        Task {
-            do {
-                let recipes = try await service.fetchRecipes()
-                if recipes.count == 0 {
-                    model.contentState = .noRecipesFound
+        DispatchQueue.main.async {
+            Task {
+                do {
+                    let recipes = try await self.service.fetchRecipes()
+                    if recipes.count == 0 {
+                        self.model.contentState = .noRecipesFound
+                    }
+                    self.model.contentState = .fetched(recipes)
+                } catch {
+                    self.model.contentState = .apiError(error)
                 }
-                model.contentState = .fetched(recipes)
-            } catch {
-                model.contentState = .apiError(error)
             }
         }
     }
